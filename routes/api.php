@@ -2,7 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
+
+use App\Http\Controllers\QuestionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,4 +20,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
+//Question related routes
+Route::post('/store-question', [QuestionController::class, 'store']);
+Route::get('/show-question/{question}', [QuestionController::class, 'show']);
+Route::patch('/edit-question/{question}', [QuestionController::class, 'update']);
+Route::delete('/delete-question/{question}', [QuestionController::class, 'destroy']);
