@@ -26,6 +26,19 @@ class QuizController extends Controller
         return response()->json($quiz);
     }
 
+    public function update(Request $request, $id)
+    {
+        $quiz = Quiz::findOrFail($id);
+
+        $incoming_fields = $request->validate([
+            'title' => 'sometimes|required|string',
+            'description' => 'sometimes|required|string',
+        ]);
+
+        $quiz->update($incoming_fields);
+        return response()->json(['message' => 'Quiz updated successfully!']);
+    }
+
     public function delete(Quiz $quiz)
     {
         if($quiz->allQuestions()->exists()){

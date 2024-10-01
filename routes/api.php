@@ -30,4 +30,5 @@ Route::delete('/delete-question/{question}', [QuestionController::class, 'destro
 //Quiz related routes
 Route::post('/create-quiz', [QuizController::class, 'create']);
 Route::get('/show-quiz/{quiz}', [QuizController::class, 'read']);
+Route::patch('/update-quiz/{quiz}', [QuizController::class, 'update']);
 Route::delete('/delete-quiz/{quiz}', [QuizController::class, 'delete']);
