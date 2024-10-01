@@ -36,17 +36,19 @@ class QuestionController extends Controller
     public function store(Request $request)
     {
         $incoming_fields = $request->validate([
-            'question_text' => 'required',
-            'right' => 'required',
-            'wrong1' => 'required',
-            'wrong2' => 'required',
-            'wrong3' => 'required'
+            'question_text' => 'required|string',
+            'right' => 'required|string',
+            'wrong1' => 'required|string',
+            'wrong2' => 'required|string',
+            'wrong3' => 'required|string',
+            'quiz_id' => 'required|integer|exists:quizzes,id'
         ]);
         $incoming_fields['question_text'] = strip_tags($incoming_fields['question_text']);
         $incoming_fields['right'] = strip_tags($incoming_fields['right']);
         $incoming_fields['wrong1'] = strip_tags($incoming_fields['wrong1']);
         $incoming_fields['wrong2'] = strip_tags($incoming_fields['wrong2']);
         $incoming_fields['wrong3'] = strip_tags($incoming_fields['wrong3']);
+        $incoming_fields['quiz_id'] = strip_tags($incoming_fields['quiz_id']);
         Question::create($incoming_fields);
         return response()->json(['message' => 'Question stored successfully!'], 201);
     }
@@ -96,6 +98,7 @@ class QuestionController extends Controller
             'wrong1' => 'sometimes|required|string',
             'wrong2' => 'sometimes|required|string',
             'wrong3' => 'sometimes|required|string',
+            'quiz_id' => 'sometimes|required|integer|exists:quizzes,id',
         ]);
 
         $question->update($incoming_fields);
@@ -109,7 +112,7 @@ class QuestionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Question $question)
-    {
+    {        
         $question->delete();
         return response()->json(['message' => 'Question deleted successfully!']);
     }

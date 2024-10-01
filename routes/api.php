@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\QuizController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +26,8 @@ Route::post('/store-question', [QuestionController::class, 'store']);
 Route::get('/show-question/{question}', [QuestionController::class, 'show']);
 Route::patch('/edit-question/{question}', [QuestionController::class, 'update']);
 Route::delete('/delete-question/{question}', [QuestionController::class, 'destroy']);
+
+//Quiz related routes
+Route::post('/create-quiz', [QuizController::class, 'create']);
+Route::get('/show-quiz/{quiz}', [QuizController::class, 'read']);
+Route::delete('/delete-quiz/{quiz}', [QuizController::class, 'delete']);
