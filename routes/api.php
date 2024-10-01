@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\QuizController;
+use App\Http\Controllers\QuizAttemptController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,3 +33,10 @@ Route::post('/create-quiz', [QuizController::class, 'create']);
 Route::get('/show-quiz/{quiz}', [QuizController::class, 'read']);
 Route::patch('/update-quiz/{quiz}', [QuizController::class, 'update']);
 Route::delete('/delete-quiz/{quiz}', [QuizController::class, 'delete']);
+
+//Quiz attempt related routes
+Route::post('/create-quiz-attempt', [QuizAttemptController::class, 'create']);
+//Moze ih biti vise - napravi show all?
+Route::get('/show-quiz-attempt/{quiz}/{user}', [QuizAttemptController::class, 'read']);
+Route::patch('/update-quiz-attempt/{quiz}/{user}', [QuizAttemptController::class, 'update']);
+Route::delete('/delete-quiz-attempt/{quiz}/{user}', [QuizAttemptController::class, 'delete']);
