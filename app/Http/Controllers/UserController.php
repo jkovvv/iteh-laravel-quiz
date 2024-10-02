@@ -6,6 +6,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
+use Illuminate\Support\Facades\Auth;
+
+
 class UserController extends Controller
 {
     public function register(Request $request){
@@ -19,6 +22,7 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
+        
         auth()->login($user);
         return response()->json(['message' => 'User registered successfully!'], 201);
     }
@@ -35,10 +39,14 @@ class UserController extends Controller
         ]);
         if(auth()->attempt(['name'=>$incoming_fields['loginname'], 'password'=>$incoming_fields['loginpassword']])){
             $request->session()->regenerate();
-            return response()->json(['message' => 'User logged in successfully!']);
+
+            $user = Auth::user();
+            $token = $user->createToken('Quiz')->plainTextToken;
+
+            return response()->json(['message' => 'User logged in successfully!', 'token' => $token]);
         }
         else{
-            return response()->json(['message' => 'User not logged in.']);
+            return response()->json(['message' => 'Invalid credentials.']);
         }
     }
 }

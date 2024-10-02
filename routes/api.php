@@ -22,11 +22,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//Question related routes
-Route::post('/store-question', [QuestionController::class, 'store']);
-Route::get('/show-question/{question}', [QuestionController::class, 'show']);
-Route::patch('/edit-question/{question}', [QuestionController::class, 'update']);
-Route::delete('/delete-question/{question}', [QuestionController::class, 'destroy']);
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    //Question related routes
+    Route::post('/store-question', [QuestionController::class, 'store']);
+    Route::get('/show-question/{question}', [QuestionController::class, 'show']);
+    Route::patch('/edit-question/{question}', [QuestionController::class, 'update']);
+    Route::delete('/delete-question/{question}', [QuestionController::class, 'destroy']);
+});
 
 //Quiz related routes
 Route::post('/create-quiz', [QuizController::class, 'create']);
