@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    /*
     public function register(Request $request){
         $request->validate([
             'name' => ['required', Rule::unique('users','name')],
@@ -49,4 +50,5 @@ class UserController extends Controller
             return response()->json(['message' => 'Invalid credentials.']);
         }
     }
+    */
 }

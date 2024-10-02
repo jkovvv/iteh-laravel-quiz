@@ -15,14 +15,8 @@ use App\Http\Controllers\API\AuthController;
 |
 */
 
-//User related routes
+//Auth related routes
 //VerifyCsrfToken.php changed to allow Postman requests. 
-
-/*
-Route::post('/register', [UserController::class, 'register']);
-Route::post('/logout', [UserController::class, 'logout']);
-Route::post('/login', [UserController::class, 'login'])->name('login');
-*/
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout']);

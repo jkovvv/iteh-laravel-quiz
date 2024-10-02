@@ -11,10 +11,12 @@ class QuizController extends Controller
             'title' => 'required|string',
             'description' => 'required|string'
         ]);
+
         $incoming_fields['title'] = strip_tags($incoming_fields['title']);
         $incoming_fields['description'] = strip_tags($incoming_fields['description']);
+
         Quiz::create($incoming_fields);
-        return response()->json(['message' => 'Quiz created successfully!'], 201);
+        return response()->json(['message' => 'Quiz created successfully!']);
     }
 
     public function read(Quiz $quiz)
@@ -42,7 +44,7 @@ class QuizController extends Controller
     public function delete(Quiz $quiz)
     {
         if($quiz->allQuestions()->exists()){
-            //Da l' mogu da zovem odavde QuestionController da ih izbrise sve?
+            //Quiz can't be deleted if there are questions with that quiz id.
             return response()->json(['message' => 'Cannot delete quiz, there are still questions in it.']);
         }
         else{

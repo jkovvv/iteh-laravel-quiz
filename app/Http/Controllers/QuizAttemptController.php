@@ -15,14 +15,16 @@ class QuizAttemptController extends Controller
             'quiz_id' => 'required|integer',
             'score' => 'required|numeric|min:0|max:100'
         ]);
+
         $incoming_fields['attempted_at'] = now();
         QuizAttempt::create($incoming_fields);
-        return response()->json(['message' => 'Quiz attempt created successfully!'], 201);
+
+        return response()->json(['message' => 'Quiz attempt created successfully!']);
     }
 
-    public function read($quiz_id, $user_id)
+    public function readLast($quiz_id, $user_id)
     {
-        $quizAttempt = QuizAttempt::where('quiz_id', $quiz_id)->where('user_id', $user_id)->first();
+        $quizAttempt = QuizAttempt::where('quiz_id', $quiz_id)->where('user_id', $user_id)->latest()->first();
 
         if (!$quizAttempt) {
         return response()->json([
@@ -32,9 +34,22 @@ class QuizAttemptController extends Controller
         return response()->json($quizAttempt);
     }
 
-    public function update(Request $request, $quiz_id, $user_id)
+    public function readAll($quiz_id, $user_id)
     {
-        $quizAttempt = QuizAttempt::where('quiz_id', $quiz_id)->where('user_id', $user_id)->first();
+        $quizAttempts = QuizAttempt::where('quiz_id', $quiz_id)->where('user_id', $user_id)->get();
+
+        if (!$quizAttempts) {
+        return response()->json([
+            'message' => 'No quiz attempts found for the given user and quiz.'
+        ]);
+        }
+        return response()->json($quizAttempts);
+    }
+
+
+    public function update(Request $request, $attempt_id)
+    {
+        $quizAttempt = QuizAttempt::findOrFail($attempt_id);
 
         $incoming_fields = $request->validate([
             'user_id' => 'required|integer',
@@ -46,9 +61,9 @@ class QuizAttemptController extends Controller
         return response()->json(['message' => 'Quiz attempt updated successfully!']);
     }
 
-    public function delete($quiz_id, $user_id)
+    public function delete($attempt_id)
     {
-        $quizAttempt = QuizAttempt::where('quiz_id', $quiz_id)->where('user_id', $user_id)->first();
+        $quizAttempt = QuizAttempt::findOrFail($attempt_id);
         
         $quizAttempt->delete();
         return response()->json(['message' => 'Quiz attempt deleted successfully!']);
