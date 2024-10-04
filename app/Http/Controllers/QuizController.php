@@ -19,12 +19,13 @@ class QuizController extends Controller
         return response()->json(['message' => 'Quiz created successfully!']);
     }
 
-    public function read(Quiz $quiz)
+    public function read($id)
     {
+        $quiz = Quiz::with('allQuestions')->find($id);
         if (!$quiz) {
             return response()->json(['error' => 'Quiz not found']);
         }
-
+        
         return response()->json($quiz);
     }
 
