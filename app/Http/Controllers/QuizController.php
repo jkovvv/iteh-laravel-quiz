@@ -29,6 +29,12 @@ class QuizController extends Controller
         return response()->json($quiz);
     }
 
+    public function readAll()
+    {
+        $quizzes = Quiz::with('allQuestions')->get(); 
+        return response()->json($quizzes); 
+    }
+
     public function update(Request $request, $id)
     {
         $quiz = Quiz::findOrFail($id);

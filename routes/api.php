@@ -42,5 +42,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 //Read routes - dont need authorization
 Route::get('/show-question/{question}', [QuestionController::class, 'show']);
 Route::get('/show-quiz/{quiz}', [QuizController::class, 'read']);
+Route::get('/show-all-quizzes', [QuizController::class, 'readAll']);
 Route::get('/show-last-quiz-attempt/{quiz}/{user}', [QuizAttemptController::class, 'readLast']);
 Route::get('/show-all-quiz-attempts/{quiz}/{user}', [QuizAttemptController::class, 'readAll']);
